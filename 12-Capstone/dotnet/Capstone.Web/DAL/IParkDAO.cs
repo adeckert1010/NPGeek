@@ -9,7 +9,7 @@ namespace Capstone.Web.DAL
     {
 
         IList<Park> GetParks();
-        Park GetPark();
+        Park GetPark(string parkCode);
 
         
     }

@@ -13,7 +13,7 @@ namespace Capstone.Web.Controllers
     {
         private IParkDAO parkDAO;
 
-        public HomeController(ParkSqlDAO parkSqlDAO)
+        public HomeController(IParkDAO parkSqlDAO)
         {
             this.parkDAO = parkSqlDAO;
         }
@@ -25,7 +25,11 @@ namespace Capstone.Web.Controllers
             return View(parks);
         }
 
-
+        public IActionResult Detail(string parkCode)
+        {
+            var park = parkDAO.GetPark(parkCode);
+            return View(park);
+        }
       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

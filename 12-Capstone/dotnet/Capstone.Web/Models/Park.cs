@@ -15,7 +15,7 @@ namespace Capstone.Web.Models
         public int MilesOfTrail { get; set; }
         public int NumCampSites { get; set; }
         public string Climate { get; set; }
-        public DateTime YearFounded { get; set; }
+        public int YearFounded { get; set; }
         public int AnnualVisitorCount { get; set; }
         public string InspirationalQuote { get; set; }
         public string QuoteSource { get; set; }

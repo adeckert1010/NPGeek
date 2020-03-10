@@ -31,18 +31,20 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
-                options.Cookie.HttpOnly = true;
-            });
+            //services.AddDistributedMemoryCache();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
+            //    options.Cookie.HttpOnly = true;
+            //});
 
 
             //Dependency Injection
+            string connectionString = Configuration.GetConnectionString("NPGeek");
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IParkDAO>(m => new ParkSqlDAO(@"Data Source=.\SQLEXPRESS; Initial Catalog=NPGeek;Integrated Security=True"));
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IParkDAO, ParkSqlDAO>(a => new ParkSqlDAO(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
