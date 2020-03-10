@@ -1,12 +1,104 @@
 ﻿@model Park
 @{
     ViewData["Title"] = "Park Detail";
+    IList<Weather> weathers = (List<Weather>)ViewData["weather"];
 }
 
 <section class="container">
 
+    <h2>@Model.ParkName - @Model.State</h2>
+    <div class="container-fluid no-padding">
+        <div class="row">
+            <div class="col-md-12">
+                <img class="center-block" src="~/images/parks/@(Model.ParkCode.ToLower()).jpg" />
+            </div>
+        </div>
+    </div>
 
-    
 
+    <blockquote class="blockquote-reverse center-block">
+        <p>@Model.InspirationalQuote</p>
+        <footer>@Model.QuoteSource</footer>
+    </blockquote>
+
+    <div>
+        <table class="table table-hover table-bordered">
+            <thead>Quick Facts</thead>
+            <tr>
+                <td>Acreage:</td>
+                <td>@Model.Acreage</td>
+            </tr>
+            <tr>
+                <td>Elevation:</td>
+                <td>@Model.ElevationFt ft.</td>
+            </tr>
+            <tr>
+                <td>Trails:</td>
+                <td>@Model.MilesOfTrail miles</td>
+            </tr>
+            <tr>
+                <td>Entry Fee:</td>
+                <td>@Model.EntryFee.ToString("C")</td>
+            </tr>
+            <tr>
+                <td>Number of Campsites:</td>
+                <td>@Model.NumCampSites</td>
+            </tr>
+            <tr>
+                <td>Climate:</td>
+                <td>@Model.Climate</td>
+            </tr>
+            <tr>
+                <td>Year Founded:</td>
+                <td>@Model.YearFounded</td>
+            </tr>
+            <tr>
+                <td>Annual Visitor Count:</td>
+                <td>@Model.AnnualVisitorCount</td>
+            </tr>
+            <tr>
+                <td>Number of Animal Species:</td>
+                <td>@Model.NumAnimalSpecies</td>
+            </tr>
+
+        </table>
+    </div>
 
 </section>
+<section>
+
+    <h2>5 Day Outlook</h2>
+    @foreach (var w in weathers)
+    {
+        <table class="table table-striped">
+
+            <tbody>
+                <tr>
+
+                    <th>@DateTime.Today.AddDays(w.FiveDayForecastValue - 1).DayOfWeek</th>
+                    <th>Temps</th>
+                    
+                </tr>
+                <tr>
+                    <td>
+
+                        <img src="~/images/weather/@(w.ForecastString.Replace(" ", "").Replace('c', 'C')).png" />
+
+                    </td>
+                    <td>
+                        <p>Hi @w.HighTemp&deg;</p>
+                        <p>Low @w.LowTemp&deg;</p>
+                    </td>
+                    </tr>
+                <tr>    
+                    <td>
+                        <p>@w.GetAdvisory()</p>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    }
+</section>
+
+@*w.ForecastString.Replace(" ", "").Replace('c','C')*@

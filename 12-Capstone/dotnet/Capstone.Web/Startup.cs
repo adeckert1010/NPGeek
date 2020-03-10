@@ -31,12 +31,12 @@ namespace Capstone.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDistributedMemoryCache();
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
-            //    options.Cookie.HttpOnly = true;
-            //});
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+            });
 
 
             //Dependency Injection
@@ -45,6 +45,7 @@ namespace Capstone.Web
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IParkDAO, ParkSqlDAO>(a => new ParkSqlDAO(connectionString));
+            services.AddScoped<IWeatherDAO, WeatherSqlDAO>(w => new WeatherSqlDAO(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
