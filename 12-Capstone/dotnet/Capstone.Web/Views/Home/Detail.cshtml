@@ -1,28 +1,29 @@
-﻿@model Park
+﻿@model DetailViewModel
 @{
     ViewData["Title"] = "Park Detail";
     IList<Weather> weathers = (List<Weather>)ViewData["weather"];
+    
 }
 
 <section class="container">
 
-    <h2>@Model.ParkName - @Model.State</h2>
+    <h2>@Model.Park.ParkName - @Model.Park.State</h2>
     <div class="container-fluid no-padding">
         <div class="row">
             <div class="col-md-12">
-                <img class="center-block" src="~/images/parks/@(Model.ParkCode.ToLower()).jpg" />
+                <img class="center-block" src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
             </div>
         </div>
     </div>
 
 
     <blockquote class="blockquote-reverse center-block">
-        <p>@Model.InspirationalQuote</p>
-        <footer>@Model.QuoteSource</footer>
+        <p>@Model.Park.InspirationalQuote</p>
+        <footer>@Model.Park.QuoteSource</footer>
     </blockquote>
 
     <div>
-        <p>@Model.ParkDescription</p>
+        <p>@Model.Park.ParkDescription</p>
     </div>
 
     <div>
@@ -30,39 +31,39 @@
             <thead>Quick Facts</thead>
             <tr>
                 <td>Acreage:</td>
-                <td>@Model.Acreage</td>
+                <td>@Model.Park.Acreage</td>
             </tr>
             <tr>
                 <td>Elevation:</td>
-                <td>@Model.ElevationFt ft.</td>
+                <td>@Model.Park.ElevationFt ft.</td>
             </tr>
             <tr>
                 <td>Trails:</td>
-                <td>@Model.MilesOfTrail miles</td>
+                <td>@Model.Park.MilesOfTrail miles</td>
             </tr>
             <tr>
                 <td>Entry Fee:</td>
-                <td>@Model.EntryFee.ToString("C")</td>
+                <td>@Model.Park.EntryFee.ToString("C")</td>
             </tr>
             <tr>
                 <td>Number of Campsites:</td>
-                <td>@Model.NumCampSites</td>
+                <td>@Model.Park.NumCampSites</td>
             </tr>
             <tr>
                 <td>Climate:</td>
-                <td>@Model.Climate</td>
+                <td>@Model.Park.Climate</td>
             </tr>
             <tr>
                 <td>Year Founded:</td>
-                <td>@Model.YearFounded</td>
+                <td>@Model.Park.YearFounded</td>
             </tr>
             <tr>
                 <td>Annual Visitor Count:</td>
-                <td>@Model.AnnualVisitorCount</td>
+                <td>@Model.Park.AnnualVisitorCount</td>
             </tr>
             <tr>
                 <td>Number of Animal Species:</td>
-                <td>@Model.NumAnimalSpecies</td>
+                <td>@Model.Park.NumAnimalSpecies</td>
             </tr>
 
         </table>
@@ -72,7 +73,14 @@
 <section>
 
     <h2>5 Day Outlook</h2>
-    @foreach (var w in weathers)
+    <form asp-controller="Home" asp-action="ChangeUnit" method="get">
+        <input type="hidden" name="weathers" value="@Model.Weathers" />
+        <input type="hidden" name="parkCode" value="@Model.Park.ParkCode" />
+        <input type="hidden" name="isF" value="@Model.IsF" />
+        <input type="submit" value="F/C" />
+
+    </form>
+    @foreach (var w in Model.Weathers)
     {
         <table class="table table-striped">
 
