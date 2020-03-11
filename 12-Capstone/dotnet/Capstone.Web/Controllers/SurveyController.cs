@@ -11,6 +11,13 @@ namespace Capstone.Web.Controllers
 {
     public class SurveyController : Controller
     {
+
+        private ISurveyResultDAO surveyResultDAO;
+        public SurveyController(ISurveyResultDAO surveyResultDAO)
+        {
+            this.surveyResultDAO = surveyResultDAO;
+        }
+            
         public IActionResult Index()
         {
             return View();
@@ -18,7 +25,15 @@ namespace Capstone.Web.Controllers
 
         public IActionResult Results()
         {
-            return View();
+            IList<SurveyResultsModel> surveyResults =  surveyResultDAO.GetPopularParks();
+            return View(surveyResults);
         }
+
+        public IActionResult SubmitSurvey(SurveyModel survey)
+        {
+            surveyResultDAO.SubmitSurvey(survey);
+            return RedirectToAction("Results");
+        }
+
     }
 }

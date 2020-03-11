@@ -46,6 +46,7 @@ namespace Capstone.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IParkDAO, ParkSqlDAO>(a => new ParkSqlDAO(connectionString));
             services.AddScoped<IWeatherDAO, WeatherSqlDAO>(w => new WeatherSqlDAO(connectionString));
+            services.AddScoped<ISurveyResultDAO, SurveyResultSqlDAO>(g => new SurveyResultSqlDAO(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

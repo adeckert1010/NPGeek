@@ -5,7 +5,7 @@
 
 <h2>Survey</h2>
 
-<form asp-controller="Survey" asp-action="" method="post">
+<form asp-controller="Survey" asp-action="SubmitSurvey" method="post">
     <label asp-for=ParkCode></label>
     <select asp-for="ParkCode" asp-items="SurveyModel.ParkNamesByCode"></select>
 
