@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,9 +10,17 @@ namespace Capstone.Web.Models
     public class SurveyModel
     {
         public int SurveyID { get; set; }
+        [Required]
+        [Display(Name ="Pick your favorite park")]
         public string ParkCode { get; set; }
+        [Required]
+        [Display(Name ="Enter your email address")]
         public string EmailAddress { get; set; }
+        [Required]
+        [Display(Name ="What state are you from?")]
         public string State { get; set; }
+        [Required]
+        [Display(Name ="Describe your activity level")]
         public string ActivityLevel { get ; set; }
 
         public static List<SelectListItem> ParkNamesByCode = new List<SelectListItem>()

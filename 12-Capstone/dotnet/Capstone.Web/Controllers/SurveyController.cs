@@ -25,12 +25,18 @@ namespace Capstone.Web.Controllers
 
         public IActionResult Results()
         {
+
             IList<SurveyResultsModel> surveyResults =  surveyResultDAO.GetPopularParks();
             return View(surveyResults);
         }
 
         public IActionResult SubmitSurvey(SurveyModel survey)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index");
+            }
+
             surveyResultDAO.SubmitSurvey(survey);
             return RedirectToAction("Results");
         }

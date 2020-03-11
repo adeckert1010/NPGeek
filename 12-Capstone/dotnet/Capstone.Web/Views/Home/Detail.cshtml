@@ -73,13 +73,7 @@
 <section>
 
     <h2>5 Day Outlook</h2>
-    <form asp-controller="Home" asp-action="ChangeUnit" method="get">
-        <input type="hidden" name="weathers" value="@Model.Weathers" />
-        <input type="hidden" name="parkCode" value="@Model.Park.ParkCode" />
-        <input type="hidden" name="isF" value="@Model.IsF" />
-        <input type="submit" value="F/C" />
-
-    </form>
+    <button id="changeFC">F&deg;/C&deg;</button>
     @foreach (var w in Model.Weathers)
     {
         <table class="table table-striped">
@@ -98,8 +92,8 @@
 
                     </td>
                     <td>
-                        <p>Hi @w.HighTemp&deg;</p>
-                        <p>Low @w.LowTemp&deg;</p>
+                        <p id="highTemp">Hi @w.HighTemp&deg;</p>
+                        <p id="lowTemp">Low @w.LowTemp&deg;</p>
                     </td>
                     </tr>
                 <tr>    
@@ -112,5 +106,8 @@
         </table>
     }
 </section>
+
+
+
 
 @*w.ForecastString.Replace(" ", "").Replace('c','C')*@
