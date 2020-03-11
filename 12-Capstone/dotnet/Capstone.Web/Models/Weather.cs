@@ -13,12 +13,6 @@ namespace Capstone.Web.Models
         public int HighTemp { get; set; }
         public string ForecastString { get; set; }
 
-        public string isHot { get; set; }
-        public bool isCold { get; set; }
-        public bool isTwentySpread { get; set; }
-
-
-
         public Dictionary<string, string> WeatherAdvisoryStrings = new Dictionary<string, string>
         {
             {"snow", "Pack snowshoes!" },
@@ -45,6 +39,26 @@ namespace Capstone.Web.Models
             
         }
 
+        public int ConvertHighTempToCelcius(int HighTemp)
+        {
+            int highCTemp = (HighTemp - 32) * 5 / 9;
+            return highCTemp;
+        }
 
+        public int ConvertLowTempToCelcius(int LowTemp)
+        {
+            int lowCTemp = (LowTemp - 32) * 5 / 9;
+            return lowCTemp;
+        }
+
+        public int ConvertHighCTempToFarenheit()
+        {
+            return HighTemp;
+        }
+
+        public int ConvertLowCTempToFarenheit()
+        {
+            return LowTemp;
+        }
     }
 }

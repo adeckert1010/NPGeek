@@ -1,0 +1,29 @@
+﻿@model SurveyModel
+@{
+    ViewData["Title"] = "Survey";
+}
+
+<h2>Survey</h2>
+
+<form asp-controller="Survey" asp-action="" method="post">
+    <label asp-for=ParkCode></label>
+    <select asp-for="ParkCode" asp-items="SurveyModel.ParkNamesByCode"></select>
+
+    <label asp-for="EmailAddress"></label>
+    <input type="email" asp-for="EmailAddress" />
+    <span asp-validation-for="EmailAddress"></span>
+
+    <label asp-for="State"></label>
+    <select asp-for="State" asp-items="SurveyModel.States"></select>
+
+    <div>
+        <label asp-for="ActivityLevel"></label>
+        <input asp-for="ActivityLevel" type="radio" name="ActivityLevel" value="Inactive" />Inactive Lifestyle
+        <input asp-for="ActivityLevel" type="radio" name="ActivityLevel" value="Sedentary" />Couch Potato
+        <input asp-for="ActivityLevel" type="radio" name="ActivityLevel" value="Active" />I Own A Gym Membership
+        <input asp-for="ActivityLevel" type="radio" name="ActivityLevel" value="EXTREMELY ACTIVE!!" />I Do Triathlons
+    </div>
+
+    <input type="submit" value="Submit" />
+
+</form>
