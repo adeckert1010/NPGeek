@@ -12,7 +12,7 @@
     <div class="container-fluid no-padding">
         <div class="row">
             <div class="col-md-12">
-                <img class="center-block" src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
+                <img class="center-block img-responsive" src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
             </div>
         </div>
     </div>
@@ -77,21 +77,20 @@
     <form asp-controller="Home" asp-action="ChangeUnit" asp-route-parkCode="@Model.Park.ParkCode" method="post">
         <input type="submit" value="Change F/C" />
     </form>
-    @foreach (var w in Model.Weathers)
-    {
-        <table class="table table-striped">
+    <table class="table table-condensed table-responsive">
 
-            <tbody>
+        <tbody>
+            @foreach (var w in Model.Weathers)
+            {
+
                 <tr>
-
                     <th>@DateTime.Today.AddDays(w.FiveDayForecastValue - 1).DayOfWeek</th>
                     <th>Temps</th>
-
                 </tr>
                 <tr>
                     <td>
 
-                        <img src="~/images/weather/@(w.ForecastString.Replace(" ", "").Replace('c', 'C')).png" />
+                        <img class="img-circle img-responsive" src="~/images/weather/@(w.ForecastString.Replace(" ", "").Replace('c', 'C')).png" />
 
                     </td>
                     <td>
@@ -111,14 +110,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <p>@w.GetAdvisory()</p>
+                        <p></p>
                     </td>
 
                 </tr>
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+
 </section>
 
 

@@ -70,4 +70,10 @@ namespace Capstone.Web.Models
 
         }
     }
+
+    public string GetWeatherAdivsory(string weatherType)
+    {
+        
+    }
 }
+
