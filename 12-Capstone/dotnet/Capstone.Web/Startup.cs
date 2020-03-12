@@ -27,26 +27,29 @@ namespace Capstone.Web
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Enable session for the MVC Application
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                // Sets session expiration to 20 minuates
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
-
-
-            //Dependency Injection
+            /* What's the difference between Transient and Scoped?
+             * Transient objects are always different; a new instance is provided to every controller and every service.
+             * Scoped objects are the same within a request, but different across different requests.
+             */
+            //Step 4
             string connectionString = Configuration.GetConnectionString("NPGeek");
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddScoped<IParkDAO, ParkSqlDAO>(a => new ParkSqlDAO(connectionString));
             services.AddScoped<IWeatherDAO, WeatherSqlDAO>(w => new WeatherSqlDAO(connectionString));
             services.AddScoped<ISurveyResultDAO, SurveyResultSqlDAO>(g => new SurveyResultSqlDAO(connectionString));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

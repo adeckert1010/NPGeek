@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Park Detail";
     IList<Weather> weathers = (List<Weather>)ViewData["weather"];
-    
+    bool isF = (bool)ViewData["isF"];
+
 }
 
 <section class="container">
@@ -73,7 +74,9 @@
 <section>
 
     <h2>5 Day Outlook</h2>
-    <button id="changeFC">F&deg;/C&deg;</button>
+    <form asp-controller="Home" asp-action="ChangeUnit" asp-route-parkCode="@Model.Park.ParkCode" method="post">
+        <input type="submit" value="Change F/C" />
+    </form>
     @foreach (var w in Model.Weathers)
     {
         <table class="table table-striped">
@@ -83,7 +86,7 @@
 
                     <th>@DateTime.Today.AddDays(w.FiveDayForecastValue - 1).DayOfWeek</th>
                     <th>Temps</th>
-                    
+
                 </tr>
                 <tr>
                     <td>
@@ -92,11 +95,22 @@
 
                     </td>
                     <td>
-                        <p id="highTemp">Hi @w.HighTemp&deg;</p>
-                        <p id="lowTemp">Low @w.LowTemp&deg;</p>
+                        <p id="highTemp">
+                            Hi @w.DisplayHigh&deg;
+                            @if (isF)
+                            {<span>F</span>}
+                            else
+                            {<span>C</span>}
+                        </p>
+                        <p id="lowTemp">
+                            Low @w.DisplayLow&deg;@if (isF)
+                            {<span>F</span>}
+                            else
+                            {<span>C</span>}
+                        </p>
                     </td>
-                    </tr>
-                <tr>    
+                </tr>
+                <tr>
                     <td>
                         <p>@w.GetAdvisory()</p>
                     </td>

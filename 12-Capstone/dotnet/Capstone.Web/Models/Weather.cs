@@ -12,7 +12,37 @@ namespace Capstone.Web.Models
         public int LowTemp { get; set; }
         public int HighTemp { get; set; }
         public string ForecastString { get; set; }
-        public bool isF { get; set; } = true;
+        public bool isF { get; set; }
+
+        public int DisplayLow
+        {
+            get
+            {
+                if (isF)
+                {
+                    return LowTemp;
+                }
+                else
+                {
+                    return (int)((LowTemp - 32.0) * (5.0 / 9.0));
+                }
+            }
+        }
+
+        public int DisplayHigh
+        {
+            get
+            {
+                if (isF)
+                {
+                    return HighTemp;
+                }
+                else
+                {
+                    return (int)((HighTemp - 32.0) * (5.0 / 9.0));
+                }
+            }
+        }
 
         public Dictionary<string, string> WeatherAdvisoryStrings = new Dictionary<string, string>
         {
@@ -32,26 +62,12 @@ namespace Capstone.Web.Models
             {
                 return "Bring an extra gallon of water!";
             }
-            if(LowTemp < 20)
+            if (LowTemp < 20)
             {
                 return "Be careful you don't freeze to death. That would suck.";
             }
             return "";
-            
-        }
 
-        public void ConvertTempToFahrenheit(int lowTemp, int highTemp)
-        {
-            HighTemp = (highTemp - 32) * (5 / 9);
-            LowTemp = (lowTemp - 32) * (5 / 9);
-            
-        }
-
-
-        public void ConvertTempToCelcius(int lowTemp, int highTemp)
-        {
-            HighTemp = ((highTemp * 9) / 5) + 32;
-            LowTemp = ((lowTemp * 9) / 5) + 32;
         }
     }
 }

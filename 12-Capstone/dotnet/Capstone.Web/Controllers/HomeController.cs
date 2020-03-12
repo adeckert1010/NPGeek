@@ -35,6 +35,20 @@ namespace Capstone.Web.Controllers
             
             var park = parkDAO.GetPark(parkCode);
             var weather = weatherDAO.GetWeather(parkCode);
+            //bool isFahrenheit = HttpContext.Session.Get<bool>("isF");
+
+            if (HttpContext.Session.Keys.Contains("isF") == false)
+            {
+                HttpContext.Session.Set<bool>("isF", true);
+            }
+
+            foreach (Weather w in weather)
+            {
+                w.isF = HttpContext.Session.Get<bool>("isF");
+            }
+
+            bool isF = HttpContext.Session.Get<bool>("isF");
+            ViewData["isF"] = isF;
 
             DetailViewModel detail = new DetailViewModel(park, weather);
             return View(detail);
@@ -42,47 +56,11 @@ namespace Capstone.Web.Controllers
 
         public IActionResult ChangeUnit(string parkCode)
         {
-            var park = parkDAO.GetPark(parkCode);
-            var weathers = weatherDAO.GetWeather(parkCode);
-            bool isF = GetUnit();
-            if (isF)
-            {
-                foreach(Weather weather in weathers)
-                {
-                    weather.ConvertTempToCelcius(weather.LowTemp, weather.HighTemp);
-                }
-                
-            }
-            else
-            {
-                foreach (Weather weather in weathers)
-                {
-                    weather.ConvertTempToFahrenheit(weather.LowTemp, weather.HighTemp);
-                }
-            }
-
-            DetailViewModel detail = new DetailViewModel(park, weathers);
-            return View("Detail", detail);
+            bool isFarenheit = HttpContext.Session.Get<bool>("isF");
+            HttpContext.Session.Set("isF", !isFarenheit);
+            return RedirectToAction("Detail", "Home", new { parkCode = parkCode });
         }
 
-        private bool GetUnit()
-        {
-            bool isF = HttpContext.Session.Get<bool>("isF");
-            if (isF == false)
-            {
-                SetUnit(isF);
-            }
-            else
-            {
-                isF = false;
-            }
-            return isF;
-        }
-
-        private void SetUnit(bool isF)
-        {
-            HttpContext.Session.Set("isF", true);
-        }
       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
