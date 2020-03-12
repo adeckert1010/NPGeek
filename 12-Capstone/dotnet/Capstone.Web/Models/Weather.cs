@@ -69,11 +69,21 @@ namespace Capstone.Web.Models
             return "";
 
         }
+
+        public string GetWeatherAdvisory()
+        {
+            string weatherType = this.ForecastString;
+            if(WeatherAdvisoryStrings.ContainsKey(weatherType))
+            {
+                return WeatherAdvisoryStrings[weatherType];
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 
-    public string GetWeatherAdivsory(string weatherType)
-    {
-        
-    }
+   
 }
 

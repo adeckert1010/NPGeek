@@ -6,7 +6,7 @@
 
 }
 
-<section class="container">
+<section class="container parkSection">
 
     <h2>@Model.Park.ParkName - @Model.Park.State</h2>
     <div class="container-fluid no-padding">
@@ -112,7 +112,7 @@
                 <tr>
                     <td colspan="3">
                         <p>@w.GetAdvisory()</p>
-                        <p></p>
+                        <p>@w.GetWeatherAdvisory()</p>
                     </td>
 
                 </tr>
@@ -125,4 +125,3 @@
 
 
 
-@*w.ForecastString.Replace(" ", "").Replace('c','C')*@
