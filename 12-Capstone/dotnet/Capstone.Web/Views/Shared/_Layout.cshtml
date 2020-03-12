@@ -17,6 +17,9 @@
     </environment>
 </head>
 <body>
+    @*<video autoplay muted loop  id="my_video">
+        <source src="https://i.imgur.com/gH00JZu.mp4" type="video/mp4" />
+    </video>*@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -39,7 +42,7 @@
     </nav>
 
     <partial name="_CookieConsentPartial" />
-    
+
     <div class="container body-content">
         <a class="img-responsive" asp-area="" asp-controller="Home" asp-action="Index"><img class="img-responsive" src="~/images/logo.png" /></a>
         @RenderBody()
@@ -71,6 +74,8 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>
 

@@ -6,13 +6,13 @@
 
 }
 
-<section class="container parkSection">
+<div class="container parkSection">
 
     <h2>@Model.Park.ParkName - @Model.Park.State</h2>
     <div class="container-fluid no-padding">
         <div class="row">
             <div class="col-md-12">
-                <img class="center-block img-responsive" src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
+                <img class="center-block img-responsive" id="detail_image" src="~/images/parks/@(Model.Park.ParkCode.ToLower()).jpg" />
             </div>
         </div>
     </div>
@@ -70,14 +70,15 @@
         </table>
     </div>
 
-</section>
-<section>
+</div>
+<br />
+<div class="container parkSection">
 
     <h2>5 Day Outlook</h2>
     <form asp-controller="Home" asp-action="ChangeUnit" asp-route-parkCode="@Model.Park.ParkCode" method="post">
         <input type="submit" value="Change F/C" />
     </form>
-    <table class="table table-condensed table-responsive">
+    <table class="table table-responsive">
 
         <tbody>
             @foreach (var w in Model.Weathers)
@@ -110,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3">
+                    <td class="advisories" colspan="3">
                         <p>@w.GetAdvisory()</p>
                         <p>@w.GetWeatherAdvisory()</p>
                     </td>
@@ -120,7 +121,7 @@
         </tbody>
     </table>
 
-</section>
+</div>
 
 
 
