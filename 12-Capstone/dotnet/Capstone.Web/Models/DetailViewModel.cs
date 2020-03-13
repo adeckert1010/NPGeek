@@ -8,13 +8,12 @@ namespace Capstone.Web.Models
     public class DetailViewModel
     {
         public Park Park { get; set; }
-        public IList<Weather> Weathers { get; set; }
+        public IList<Weather> Weathers { get; set; } = new List<Weather>();
         public bool IsF { get; set; } = true;
 
-        public DetailViewModel(Park park, IList<Weather> weathers)
+        public DetailViewModel(Park park)
         {
             this.Park = park;
-            this.Weathers = weathers;
         }
 
 

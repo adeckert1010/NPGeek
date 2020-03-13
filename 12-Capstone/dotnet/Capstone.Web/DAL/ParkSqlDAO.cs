@@ -86,6 +86,8 @@ namespace Capstone.Web.DAL
                     ParkDescription = Convert.ToString(reader["parkDescription"]),
                     EntryFee = Convert.ToInt32(reader["entryFee"]),
                     NumAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"]),
+                    Latitude = Convert.ToDecimal(reader["latitude"]),
+                    Longitude = Convert.ToDecimal(reader["longitude"])
                 };
 
             }

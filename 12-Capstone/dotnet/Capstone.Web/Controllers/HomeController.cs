@@ -8,6 +8,9 @@ using Capstone.Web.Models;
 using Capstone.Web.DAL;
 using Microsoft.AspNetCore.Http;
 using Capstone.Web.Extensions;
+using static Capstone.Web.Models.WeatherModelFromJSON;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Capstone.Web.Controllers
 {
@@ -30,19 +33,52 @@ namespace Capstone.Web.Controllers
             return View(parks);
         }
 
-        public IActionResult Detail(string parkCode)
+        public async Task<ActionResult> Detail(string parkCode)
         {
-            
+            Datum[] dataArray = null;
             var park = parkDAO.GetPark(parkCode);
-            var weather = weatherDAO.GetWeather(parkCode);
+
+            //accessing weather by database
+            //var weather = weatherDAO.GetWeather(parkCode);
             //bool isFahrenheit = HttpContext.Session.Get<bool>("isF");
+            DetailViewModel detail = new DetailViewModel(park);
+            string latitude = park.Latitude.ToString();
+            string longitude = park.Longitude.ToString();
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.darksky.net/forecast/11f6def22a0f23b0acdf9167bb8f7bf5/");
+                //HTTP GET
+                var responseTask = client.GetAsync(latitude + "," + longitude + "?exclude=currently,minutely,hourly,alerts,flags");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    string content = await result.Content.ReadAsStringAsync();
+                    var weatherArray = JsonConvert.DeserializeObject<Rootobject>(content).daily.data;
+                    for (int i = 1; i < 6; i++)
+                    {
+                        Weather w = new Weather();
+                        w.LowTemp = (int)weatherArray[i].temperatureLow;
+                        w.HighTemp = (int)weatherArray[i].temperatureHigh;
+                        w.ForecastString = weatherArray[i].icon;
+                        w.FiveDayForecastValue = i;
+                        w.ParkCode = parkCode;
+                        detail.Weathers.Add(w);
+                    }
+
+                }
+            }
+
+            ViewData["dataArray"] = dataArray;
+
 
             if (HttpContext.Session.Keys.Contains("isF") == false)
             {
                 HttpContext.Session.Set<bool>("isF", true);
             }
 
-            foreach (Weather w in weather)
+            foreach (Weather w in detail.Weathers)
             {
                 w.isF = HttpContext.Session.Get<bool>("isF");
             }
@@ -50,7 +86,7 @@ namespace Capstone.Web.Controllers
             bool isF = HttpContext.Session.Get<bool>("isF");
             ViewData["isF"] = isF;
 
-            DetailViewModel detail = new DetailViewModel(park, weather);
+            
             return View(detail);
         }
 

@@ -22,5 +22,8 @@ namespace Capstone.Web.Models
         public string ParkDescription { get; set; }
         public int EntryFee { get; set; }
         public int NumAnimalSpecies { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+
     }
 }

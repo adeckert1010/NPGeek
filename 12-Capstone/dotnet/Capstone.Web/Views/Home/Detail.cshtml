@@ -3,7 +3,7 @@
     ViewData["Title"] = "Park Detail";
     IList<Weather> weathers = (List<Weather>)ViewData["weather"];
     bool isF = (bool)ViewData["isF"];
-
+    
 }
 
 <div class="container parkSection">
@@ -83,7 +83,7 @@
         <tbody>
             @foreach (var w in Model.Weathers)
             {
-
+                
                 <tr>
                     <th>@DateTime.Today.AddDays(w.FiveDayForecastValue - 1).DayOfWeek</th>
                     <th>Temps</th>
@@ -92,6 +92,7 @@
                     <td>
 
                         <img class="img-circle img-responsive" src="~/images/weather/@(w.ForecastString.Replace(" ", "").Replace('c', 'C')).png" />
+                        
 
                     </td>
                     <td>

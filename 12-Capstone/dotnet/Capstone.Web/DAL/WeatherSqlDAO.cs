@@ -54,7 +54,8 @@ namespace Capstone.Web.DAL
                 LowTemp = Convert.ToInt32(reader["low"]),
                 HighTemp = Convert.ToInt32(reader["high"]),
                 ForecastString = Convert.ToString(reader["forecast"])
-                
+
+
             };
 
         }
