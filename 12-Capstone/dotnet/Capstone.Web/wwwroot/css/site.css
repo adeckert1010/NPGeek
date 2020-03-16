@@ -47,6 +47,10 @@ body {
     border-radius: 8px;
 }
 
+.weatherimage{
+    max-width: 250px;
+}
+
 
 .parkimage {
     float: left;
